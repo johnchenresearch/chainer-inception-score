@@ -580,7 +580,7 @@ class Inception(Chain):
             ])
             self.logit = L.Linear(2048, 1008)
 
-    def __call__(self, x):
+    def __call__(self, x, get_feature=False):
         """Input dims are (batch_size, 3, 299, 299)."""
 
         # assert x.shape[1:] == (3, 299, 299)
@@ -646,6 +646,8 @@ class Inception(Chain):
         # assert h.shape[1:] == (2048, 1, 1)
 
         h = F.reshape(h, (-1, 2048))
+        if get_feature:
+            return h
         h = self.logit(h)
         h = F.softmax(h)
 
