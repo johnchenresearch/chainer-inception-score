@@ -6,7 +6,7 @@ from chainer import links as L
 from chainer import Variable
 
 
-def inception_score(model, ims, batch_size=100, splits=10):
+def inception_score(model, ims, batch_size=25, splits=10):
     """Compute the inception score for given images.
 
     Default batch_size is 100 and split size is 10. Please refer to the
