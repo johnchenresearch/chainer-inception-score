@@ -1,5 +1,5 @@
 import math
-
+import chainer
 from chainer import Chain
 from chainer import functions as F
 from chainer import links as L
@@ -47,7 +47,8 @@ def inception_score(model, ims, batch_size=25, splits=10):
             ims_batch = F.resize_images(ims_batch, (299, 299))  # bilinear
 
         # Feed images to the inception module to get the softmax predictions
-        y = model(ims_batch)
+        with chainer.using_config('train', False), chainer.using_config('enable_backprop', False):
+            y = model(ims_batch)
         ys[batch_start:batch_end] = y.data
 
     # Compute the inception score based on the softmax predictions of the
